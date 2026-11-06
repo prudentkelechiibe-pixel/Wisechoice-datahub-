@@ -1,0 +1,25 @@
+{
+"name": "WiseChoice Data Hub",
+"short_name": "WiseChoice",
+"description": "Buy affordable mobile data, airtime, electricity, DStv subscriptions and WAEC PINs.",
+"start_url": "/",
+"scope": "/",
+"display": "standalone",
+"orientation": "portrait",
+"background_color": "#ffffff",
+"theme_color": "#0756b5",
+"icons": [
+{
+"src": "/icons/wisechoice-192.png",
+"sizes": "192x192",
+"type": "image/png",
+"purpose": "any"
+},
+{
+"src": "/icons/wisechoice-512.png",
+"sizes": "512x512",
+"type": "image/png",
+"purpose": "any"
+}
+]
+}
