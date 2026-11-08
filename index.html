@@ -198,6 +198,19 @@
             <a href="contact.html">Contact</a>
         </p>
     </footer>
+    <script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js")
+            .then(registration => {
+                console.log("WiseChoice PWA registered successfully!");
+            })
+            .catch(error => {
+                console.error("PWA registration failed:", error);
+            });
+    });
+}
+    </script>
 
 </body>
     </html>
