@@ -258,7 +258,72 @@ if ("serviceWorker" in navigator) {
     });
 }
     </script>
+<script>
+let deferredPrompt;
 
+const installButton = document.getElementById("installButton");
+const installMessage = document.getElementById("installMessage");
+
+// Detect whether WiseChoice is already installed
+function isAppInstalled() {
+    return window.matchMedia("(display-mode: standalone)").matches ||
+           window.navigator.standalone === true;
+}
+
+// If already installed, hide installation button
+if (isAppInstalled()) {
+    installButton.style.display = "none";
+} else {
+
+    // Receive Chrome's installation event
+    window.addEventListener("beforeinstallprompt", (event) => {
+
+        event.preventDefault();
+
+        deferredPrompt = event;
+
+        console.log("WiseChoice installation is ready!");
+
+    });
+
+    // Trigger direct installation when button is clicked
+    installButton.addEventListener("click", async () => {
+
+        if (!deferredPrompt) {
+            installMessage.textContent =
+                "Installation is not available yet. Please try again shortly.";
+            return;
+        }
+
+        deferredPrompt.prompt();
+
+        const choice = await deferredPrompt.userChoice;
+
+        if (choice.outcome === "accepted") {
+            installMessage.textContent =
+                "WiseChoice installation accepted!";
+        } else {
+            installMessage.textContent =
+                "Installation cancelled. You can try again.";
+        }
+
+        deferredPrompt = null;
+
+    });
+}
+
+// Detect successful installation
+window.addEventListener("appinstalled", () => {
+
+    installButton.style.display = "none";
+
+    installMessage.textContent =
+        "WiseChoice App has been installed successfully!";
+
+    deferredPrompt = null;
+
+});
+</script>
 
 
 </body>
