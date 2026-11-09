@@ -262,79 +262,60 @@ window.addEventListener("beforeinstallprompt", (event) => {
             <a href="contact.html">Contact</a>
         </p>
     </footer>
-    <script>
+    
+<script>
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
         navigator.serviceWorker.register("/service-worker.js")
-            .then(registration => {
-                console.log("WiseChoice PWA registered successfully!");
-            })
-            .catch(error => {
-                console.error("PWA registration failed:", error);
-            });
+            .then(() => console.log("WiseChoice PWA registered successfully!"))
+            .catch(error => console.error("PWA registration failed:", error));
     });
 }
-    </script>
-<script>
 
 const installButton = document.getElementById("installButton");
 const installMessage = document.getElementById("installMessage");
 
-// Detect whether WiseChoice is already installed
 function isAppInstalled() {
     return window.matchMedia("(display-mode: standalone)").matches ||
            window.navigator.standalone === true;
 }
 
-// If already installed, hide installation button
 if (isAppInstalled()) {
     installButton.style.display = "none";
 } else {
-
-    // 
-    
-
-        
-
-    // Trigger direct installation when button is clicked
     installButton.addEventListener("click", async () => {
 
+        // iPhone - no automatic download
+        if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+            installMessage.textContent = "On iPhone: Tap Share > Add to Home Screen";
+            return;
+        }
+
+        // Chrome not ready yet - remember click, wait for Chrome
         if (!deferredPrompt) {
-            installMessage.textContent =
-                "Installation is not available yet. Please try again shortly.";
+            userClickedInstall = true;
+            installMessage.textContent = "Preparing download... please wait a moment.";
             return;
         }
 
         deferredPrompt.prompt();
-
         const choice = await deferredPrompt.userChoice;
 
         if (choice.outcome === "accepted") {
-            installMessage.textContent =
-                "WiseChoice installation accepted!";
+            installMessage.textContent = "WiseChoice installation accepted!";
         } else {
-            installMessage.textContent =
-                "Installation cancelled. You can try again.";
+            installMessage.textContent = "Installation cancelled. You can try again.";
         }
-
         deferredPrompt = null;
-
     });
 }
 
-// Detect successful installation
 window.addEventListener("appinstalled", () => {
-
     installButton.style.display = "none";
-
-    installMessage.textContent =
-        "WiseChoice App has been installed successfully!";
-
+    installMessage.textContent = "WiseChoice App has been installed successfully!";
     deferredPrompt = null;
-
 });
 </script>
-
 
 </body>
     </html>
