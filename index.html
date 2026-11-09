@@ -160,15 +160,21 @@ gap: 10px;
 <meta name="theme-color" content="#0756b5">
     <script>
 let deferredPrompt = null;
+let userClickedInstall = false;
 
 window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
-
     deferredPrompt = event;
-
     console.log("WiseChoice installation prompt received!");
+
+    // If visitor already clicked before Chrome was ready, install now
+    if (userClickedInstall) {
+        userClickedInstall = false;
+        deferredPrompt.prompt();
+    }
 });
     </script>
+
 </head>
 
 <body>
