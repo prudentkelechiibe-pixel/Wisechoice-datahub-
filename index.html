@@ -154,6 +154,50 @@ gap: 10px;
             margin: 0 8px;
             text-decoration: none;
         }
+
+        /* WiseChoice Install Guide Popup */
+.install-guide-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex; align-items: flex-end; justify-content: center;
+    z-index: 9999; padding: 16px;
+}
+.install-guide-box {
+    background: #fff; width: 100%; max-width: 420px;
+    border-radius: 20px 20px 16px 16px; padding: 22px;
+    text-align: center; position: relative;
+    animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.install-guide-close {
+    position: absolute; top: 10px; right: 14px;
+    background: #f1f1f1; border: none; font-size: 22px;
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+}
+.install-guide-logo {
+    width: 64px; height: 64px; border-radius: 16px; margin-bottom: 8px;
+}
+.install-guide-box h3 { margin: 6px 0; color: #0756b5; font-size: 20px; }
+.install-guide-box p { color: #555; font-size: 14px; margin: 0 0 14px; }
+.install-steps { text-align: left; display: flex; flex-direction: column; gap: 10px; }
+.install-step {
+    display: flex; align-items: center; gap: 12px;
+    background: #f4f8ff; padding: 12px; border-radius: 12px;
+}
+.step-num {
+    background: #0756b5; color: #fff; width: 28px; height: 28px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 14px; flex-shrink: 0;
+}
+.install-step div { flex: 1; display: flex; flex-direction: column; }
+.install-step strong { font-size: 14px; color: #222; }
+.install-step span { font-size: 12px; color: #666; }
+.step-icon { font-size: 22px; }
+.install-guide-btn {
+    margin-top: 16px; width: 100%; padding: 13px;
+    background: #0756b5; color: #fff; border: none;
+    border-radius: 12px; font-weight: bold; font-size: 15px; cursor: pointer;
+    }
     </style>
     <link rel="manifest" href="manifest.json">
 
