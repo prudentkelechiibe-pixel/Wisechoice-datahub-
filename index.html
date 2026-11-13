@@ -262,6 +262,47 @@ window.addEventListener("beforeinstallprompt", (event) => {
             <a href="contact.html">Contact</a>
         </p>
     </footer>
+    <!-- WiseChoice Install Guide Popup -->
+<div id="installGuide" class="install-guide-overlay" style="display:none;">
+  <div class="install-guide-box">
+    <button class="install-guide-close" onclick="document.getElementById('installGuide').style.display='none'">×</button>
+    
+    <img src="/icons/wisechoice-192.png" alt="WiseChoice" class="install-guide-logo">
+    <h3 id="installGuideTitle">Install WiseChoice App</h3>
+    <p id="installGuideText">Follow these steps:</p>
+
+    <div class="install-steps">
+      <div class="install-step">
+        <span class="step-num">1</span>
+        <div>
+          <strong id="step1Title">Tap the 3 dots ⋮</strong>
+          <span id="step1Desc">At the top right of your browser</span>
+        </div>
+        <span class="step-icon">⋮</span>
+      </div>
+
+      <div class="install-step">
+        <span class="step-num">2</span>
+        <div>
+          <strong id="step2Title">Tap Add to Home Screen</strong>
+          <span id="step2Desc">Or Install App / Install WiseChoice</span>
+        </div>
+        <span class="step-icon">⬇️</span>
+      </div>
+
+      <div class="install-step">
+        <span class="step-num">3</span>
+        <div>
+          <strong>Tap Install / Add</strong>
+          <span>WiseChoice will appear on your home screen like WhatsApp</span>
+        </div>
+        <span class="step-icon">✅</span>
+      </div>
+    </div>
+
+    <button class="install-guide-btn" onclick="document.getElementById('installGuide').style.display='none'">Got It</button>
+  </div>
+</div>
     
 <script>
 // ===== WiseChoice PWA - Second Script (Complete) =====
