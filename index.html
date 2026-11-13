@@ -264,11 +264,13 @@ window.addEventListener("beforeinstallprompt", (event) => {
     </footer>
     
 <script>
+// ===== WiseChoice PWA - Second Script (Complete) =====
+
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
         navigator.serviceWorker.register("/service-worker.js")
-            .then(() => console.log("WiseChoice PWA registered successfully!"))
-            .catch(error => console.error("PWA registration failed:", error));
+            .then(() => console.log("WiseChoice PWA registered!"))
+            .catch(e => console.error("PWA registration failed:", e));
     });
 }
 
@@ -280,39 +282,67 @@ function isAppInstalled() {
            window.navigator.standalone === true;
 }
 
+// Show the popup guide
+function showInstallGuide(title, step1Title, step1Desc, step2Title) {
+    document.getElementById("installGuideTitle").textContent = title;
+    document.getElementById("step1Title").textContent = step1Title;
+    document.getElementById("step1Desc").textContent = step1Desc;
+    document.getElementById("step2Title").textContent = step2Title;
+    document.getElementById("installGuide").style.display = "flex";
+}
+
+// If already installed, hide button
 if (isAppInstalled()) {
-    installButton.style.display = "none";
+    if (installButton) installButton.style.display = "none";
 } else {
-    installButton.addEventListener("click", async () => {
+    if (installButton) {
+        installButton.addEventListener("click", async () => {
 
-        // iPhone - no automatic download
-        if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-            installMessage.textContent = "On iPhone: Tap Share > Add to Home Screen";
-            return;
-        }
+            // 1. Inside Google App / WhatsApp / Facebook / Instagram browser - CANNOT install here
+            const isInAppBrowser = /FBAN|FBAV|Instagram|WhatsApp|Line|GoogleApp/i.test(navigator.userAgent);
+            if (isInAppBrowser) {
+                showInstallGuide("Open in Chrome First", "Tap the 3 dots ⋮", "At the top of this app", "Tap Open in Chrome");
+                if (installMessage) installMessage.textContent = "Please open in Chrome to install.";
+                return;
+            }
 
-        // Chrome not ready yet - remember click, wait for Chrome
-        if (!deferredPrompt) {
-            userClickedInstall = true;
-            installMessage.textContent = "Preparing download... please wait a moment.";
-            return;
-        }
+            // 2. iPhone / iPad Safari - No automatic popup, use Share
+            if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+                showInstallGuide("Install on iPhone", "Tap Share ⬆️", "At the bottom of Safari", "Tap Add to Home Screen");
+                if (installMessage) installMessage.textContent = "On iPhone: Tap Share > Add to Home Screen";
+                return;
+            }
 
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
+            // 3. Firefox - No automatic popup, use Menu
+            if (/firefox/i.test(navigator.userAgent)) {
+                showInstallGuide("Install on Firefox", "Tap the 3 dots ⋮", "At the top right of Firefox", "Tap Install / Add to Home Screen");
+                if (installMessage) installMessage.textContent = "On Firefox: Tap 3 dots > Install";
+                return;
+            }
 
-        if (choice.outcome === "accepted") {
-            installMessage.textContent = "WiseChoice installation accepted!";
-        } else {
-            installMessage.textContent = "Installation cancelled. You can try again.";
-        }
-        deferredPrompt = null;
-    });
+            // 4. Chrome / Edge / Brave / Opera / Samsung - Automatic download
+            if (!deferredPrompt) {
+                userClickedInstall = true;
+                if (installMessage) installMessage.textContent = "Preparing download... If popup does not appear in 5 seconds, tap the 3 dots in Chrome > Add to Home screen / Install app";
+                return;
+            }
+
+            deferredPrompt.prompt();
+            const choice = await deferredPrompt.userChoice;
+
+            if (choice.outcome === "accepted") {
+                if (installMessage) installMessage.textContent = "WiseChoice installation accepted!";
+            } else {
+                if (installMessage) installMessage.textContent = "Installation cancelled. You can try again.";
+            }
+            deferredPrompt = null;
+        });
+    }
 }
 
 window.addEventListener("appinstalled", () => {
-    installButton.style.display = "none";
-    installMessage.textContent = "WiseChoice App has been installed successfully!";
+    if (installButton) installButton.style.display = "none";
+    if (installMessage) installMessage.textContent = "WiseChoice App has been installed successfully!";
     deferredPrompt = null;
 });
 </script>
