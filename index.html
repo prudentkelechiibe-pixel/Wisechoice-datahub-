@@ -386,7 +386,7 @@ if (isAppInstalled()) {
             // 1. Inside Google App / WhatsApp / Facebook / Instagram browser - CANNOT install here
             const isInAppBrowser = /FBAN|FBAV|Instagram|WhatsApp|Line|GoogleApp/i.test(navigator.userAgent);
             if (isInAppBrowser) {
-                showInstallGuide("Open in Chrome First", "use chrome to download app",);
+                showInstallGuide("Open in Chrome First", "Tap the 3 dots ⋮", "At the top of this app", "Tap Open in Chrome");
                 if (installMessage) installMessage.textContent = "Please open in Chrome to install.";
                 return;
             }
