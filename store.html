@@ -138,36 +138,40 @@
             </p>
         </section>
 
-        <section class="networks">
+<section class="networks">
+<h2>Buy Mobile Data</h2>
 
-            <h2>Choose Your Network</h2>
+<div class="network-card">
+<label for="networkSelect">Choose Network</label>
+<select id="networkSelect">
+<option value="">Select Network</option>
+<option value="MTN">MTN</option>
+<option value="AIRTEL">Airtel</option>
+<option value="GLO">Glo</option>
+</select>
 
-            <div class="network-card" id="mtn">
-                <h3>MTN</h3>
-                <p>Stay connected with MTN data and airtime.</p>
-                <span class="coming-soon">Plans Coming Soon</span>
-            </div>
+<label for="categorySelect">Choose Data Category</label>
+<select id="categorySelect" disabled>
+<option value="">Select Category</option>
+</select>
 
-            <div class="network-card" id="airtel">
-                <h3>Airtel</h3>
-                <p>Explore Airtel data and airtime services.</p>
-                <span class="coming-soon">Plans Coming Soon</span>
-            </div>
+<label for="planSelect">Choose Data Plan</label>
+<select id="planSelect" disabled>
+<option value="">Select Plan</option>
+</select>
 
-            <div class="network-card" id="glo">
-                <h3>Glo</h3>
-                <p>Enjoy convenient Glo data and airtime services.</p>
-                <span class="coming-soon">Plans Coming Soon</span>
-            </div>
+<p id="planPrice"></p>
 
-            <div class="network-card" id="9mobile">
-                <h3>9mobile</h3>
-                <p>Explore 9mobile data and airtime services.</p>
-                <span class="coming-soon">Plans Coming Soon</span>
-            </div>
+<label for="phoneNumber">Recipient Phone Number</label>
+<input type="tel" id="phoneNumber" placeholder="Enter phone number">
 
-        </section>
+<button type="button" id="continueButton" disabled>
+Continue
+</button>
 
+<p id="planMessage">Loading data plans will begin shortly.</p>
+</div>
+    </section>
     </main>
 
     <footer>
